@@ -97,8 +97,6 @@ impl Engine {
 
 impl Engine {
 	fn get_user_side() -> Side {
-		let side;
-
 		loop {
 			let mut input = Default::default();
 
@@ -108,24 +106,20 @@ impl Engine {
 				.read_line(&mut input)
 				.expect("Failure to read line");
 
-			println!("{}", input.to_uppercase().as_str());
-
-			let chars: Vec<char> = input.chars().collect();
-
-			match chars[0] {
-				'X' | 'x' => {
-					side = Sides::X;
-					break;
+			if let Ok(ch) = input.trim().parse::<String>() {
+				match ch.as_str() {
+					"X" | "x" => {
+						println!("");
+						return Sides::X;
+					}
+					"O" | "o" => {
+						println!("");
+						return Sides::O;
+					}
+					_ => (),
 				}
-				'O' | 'o' => {
-					side = Sides::O;
-					break;
-				}
-				_ => continue,
 			}
 		}
-
-		side
 	}
 
 	fn get_user_move(list: MoveList) -> Move {
